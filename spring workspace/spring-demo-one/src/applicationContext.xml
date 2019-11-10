@@ -21,6 +21,8 @@
     	class="com.luv2code.springdemo.CricketCoach">
     	<!-- Setter Dependency Injection  -->
     	<property name="fortuneService" ref="myFortune" />
+    	<property name="emailAddress" value="joliverestamapdor@gmail.com" />
+    	<property name="team" value="Team Valconnect" />
    	</bean>
     
     <bean id="myLoggerConfig" class="com.luv2code.springdemo.MyLoggerConfig" init-method="initLogger">

@@ -1,13 +1,20 @@
 package com.luv2code.springdemo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TennisCoach implements Coach {
 	
+	// injecting value from properties file
+	@Value("${foo.email}")
+	private String emailAddress;
+	
 	// field injection
 	@Autowired
+	@Qualifier("joliverFortuneService")
 	private FortuneService fortuneService;
 	
 	// Constructor Injection
@@ -25,7 +32,7 @@ public class TennisCoach implements Coach {
 
 	@Override
 	public String getDailyFortune() {
-		return this.fortuneService.getFortune();
+		return this.fortuneService.getFortune() + "\nEmail: " + this.emailAddress;
 	}
 	
 	// Setter Injection

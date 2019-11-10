@@ -1,5 +1,6 @@
 package com.luv2code.springdemo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AnnotationDemoApp {

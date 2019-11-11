@@ -1,5 +1,8 @@
 package com.luv2code.springdemo;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,4 +53,16 @@ public class TennisCoach implements Coach {
 		this.fortuneService = fortuneService;
 	}
 	*/
+	
+	// define init method
+	@PostConstruct
+	public void doMyStartUpStuff() {
+		System.out.println(">> TennisCOach: inside of doMyStartUpStuff");
+	}
+	
+	// define destroy methid
+	@PreDestroy
+	public void doMyCleanUpStuff() {
+		System.out.println(">> TennisCoach: inside of doMyCLeanUpStuff");
+	}
 }

@@ -1,4 +1,4 @@
-package com.luv2code.springdemo.mvc;
+package com.luv2code.springdemo.mvc.basics;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

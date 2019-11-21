@@ -1,4 +1,4 @@
-package com.luv2code.springdemo.mvc;
+package com.luv2code.springdemo.mvc.basics;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/hello")
 public class HelloWorldController {
 	
 	@RequestMapping("/showForm")

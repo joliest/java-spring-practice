@@ -7,8 +7,9 @@ import org.hibernate.cfg.Configuration;
 import com.luv2code.hibernate.demo.entity.Course;
 import com.luv2code.hibernate.demo.entity.Instructor;
 import com.luv2code.hibernate.demo.entity.InstructorDetail;
+import com.luv2code.hibernate.demo.entity.Review;
 
-public class CreateInstructorDemo {
+public class GetCourseAndReviewDemo {
 
 	public static void main(String[] args) {
 		
@@ -16,31 +17,25 @@ public class CreateInstructorDemo {
 				.configure("hibernate.cfg.xml")
 				.addAnnotatedClass(Instructor.class)
 				.addAnnotatedClass(InstructorDetail.class)
+				.addAnnotatedClass(Review.class)
 				.addAnnotatedClass(Course.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
 		
 		try {
-			
 			session.beginTransaction();
 			
-			int instructorId = 1;
-			Instructor instructor = session.get(Instructor.class, instructorId);
+			int id = 10;
+			Course tempCourse = session.get(Course.class, id);
 			
-			Course course1 = new Course("Fyre Project");
-			Course course2 = new Course("How to be a human");
-			
-			instructor.addCourse(course1);
-			instructor.addCourse(course2);
-			
-			session.save(course1);
-			session.save(course2);
-			
-			session.save(instructor);
+			System.out.println("COurse: " + tempCourse);
+			System.out.println("Reviews: \n" + tempCourse.getReviews());
 			
 			session.getTransaction().commit();
 			
+		} catch (Exception ex) {
+			System.out.println(ex);
 		} finally {
 			session.close();
 			factory.close();

@@ -3,13 +3,13 @@ package com.luv2code.hibernate.demo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 import com.luv2code.hibernate.demo.entity.Course;
 import com.luv2code.hibernate.demo.entity.Instructor;
 import com.luv2code.hibernate.demo.entity.InstructorDetail;
+import com.luv2code.hibernate.demo.entity.Review;
 
-public class FetchJoinHQLDemo {
+public class DeleteCourseAndReviewsDemo {
 
 	public static void main(String[] args) {
 		
@@ -17,6 +17,7 @@ public class FetchJoinHQLDemo {
 				.configure("hibernate.cfg.xml")
 				.addAnnotatedClass(Instructor.class)
 				.addAnnotatedClass(InstructorDetail.class)
+				.addAnnotatedClass(Review.class)
 				.addAnnotatedClass(Course.class)
 				.buildSessionFactory();
 		
@@ -25,28 +26,21 @@ public class FetchJoinHQLDemo {
 		try {
 			session.beginTransaction();
 			
-			int id = 1;
-
-			// Hibernate query with HQL
-			Query<Instructor> query =
-					session.createQuery("select i from Instructor i " +
-							"JOIN FETCH i.courses " +
-							"where i.id=:theInstructorId", Instructor.class);
-			// set parameter on query
-			query.setParameter("theInstructorId", id);
+			int id = 10;
+			Course tempCourse = session.get(Course.class, id);
 			
-			// execute the query and get instructor
-			Instructor instructor = query.getSingleResult();
+			System.out.println("COurse: " + tempCourse);
+			System.out.println("Reviews: \n" + tempCourse.getReviews());
 			
-			System.out.println("DebugMode: Instructor: " + instructor);
+			System.out.println("Deleting course: ");
+			session.delete(tempCourse);
 			
 			session.getTransaction().commit();
 			
-			session.close();
-			
-			System.out.println(" \nDebugMode: Session is now closed: \n" + instructor.getCourses());
-			
+		} catch (Exception ex) {
+			System.out.println(ex);
 		} finally {
+			session.close();
 			factory.close();
 		}
 	}

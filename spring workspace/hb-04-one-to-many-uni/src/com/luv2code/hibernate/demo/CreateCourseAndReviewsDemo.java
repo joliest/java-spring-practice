@@ -7,8 +7,9 @@ import org.hibernate.cfg.Configuration;
 import com.luv2code.hibernate.demo.entity.Course;
 import com.luv2code.hibernate.demo.entity.Instructor;
 import com.luv2code.hibernate.demo.entity.InstructorDetail;
+import com.luv2code.hibernate.demo.entity.Review;
 
-public class EagerLazyDemo {
+public class CreateCourseAndReviewsDemo {
 
 	public static void main(String[] args) {
 		
@@ -16,6 +17,7 @@ public class EagerLazyDemo {
 				.configure("hibernate.cfg.xml")
 				.addAnnotatedClass(Instructor.class)
 				.addAnnotatedClass(InstructorDetail.class)
+				.addAnnotatedClass(Review.class)
 				.addAnnotatedClass(Course.class)
 				.buildSessionFactory();
 		
@@ -24,22 +26,22 @@ public class EagerLazyDemo {
 		try {
 			session.beginTransaction();
 			
-			int id = 1;
-			Instructor instructor = session.get(Instructor.class, id);
+			Course tempCourse = new Course("Pacman - How to score one million points");
 			
-			System.out.println("DebugMode: Instructor: " + instructor);
+			tempCourse.addReview(new Review("Great course... love it"));
+			tempCourse.addReview(new Review("Cool course!"));
+			tempCourse.addReview(new Review("What a dumb course, you are an idiot"));
 			
-			// retrieveing list of courses
-			System.out.println("DebugMode: Courses: " + instructor.getCourses());
+			System.out.println("Savinvg the course");
+			System.out.println(tempCourse);
+			session.save(tempCourse);
 			
 			session.getTransaction().commit();
 			
-			session.close();
-			
-			// retrieveing list of courses
-			System.out.println(" \nDebugMode: Session is now closed: " + instructor.getCourses());
-			
+		} catch (Exception ex) {
+			System.out.println(ex);
 		} finally {
+			session.close();
 			factory.close();
 		}
 	}

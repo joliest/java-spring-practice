@@ -74,4 +74,13 @@ public class CustomerController {
 		
 		return "redirect:/customer/list";
 	}
+	
+	@GetMapping("/search")
+	public String search(@RequestParam("searchName") String name, Model model) {
+		// get customer from the dao
+		List<Customer> customers = customerService.searchCustomer(name);
+		model.addAttribute("customers", customers);
+		
+		return "list-customers";
+	}
 }

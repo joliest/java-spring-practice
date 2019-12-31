@@ -1,10 +1,16 @@
 package com.luv2code.aopdemo;
 
+import java.util.logging.Logger;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.luv2code.aopdemo.service.TrafficFortuneService;
 
-public class AroundDemoApp {
+public class AroundWithLoggerDemoApp {
+	
+	private static Logger myLogger = 
+			Logger.getLogger(AroundWithLoggerDemoApp.class.getName());
+	
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext context =
 				new AnnotationConfigApplicationContext(DemoConfig.class);
@@ -12,9 +18,9 @@ public class AroundDemoApp {
 		TrafficFortuneService trafficFortuneService = 
 				context.getBean(TrafficFortuneService.class);
 
-		System.out.println("\nMain Program: AroundDemo App");
-		System.out.println("\nCalling getFortune()");
-		System.out.println("\nThe Fortune is: " + trafficFortuneService.getFortune());
+		myLogger.info("\nMain Program: AroundDemo App");
+		myLogger.info("\nCalling getFortune()");
+		myLogger.info("\nThe Fortune is: " + trafficFortuneService.getFortune());
 		
 		context.close();
 	}

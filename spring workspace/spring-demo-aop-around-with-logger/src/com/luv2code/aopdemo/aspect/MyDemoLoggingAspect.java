@@ -1,6 +1,7 @@
 package com.luv2code.aopdemo.aspect;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,18 +16,22 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.luv2code.aopdemo.Account;
+import com.luv2code.aopdemo.AroundWithLoggerDemoApp;
 
 @Aspect
 @Component
 @Order(2)
 public class MyDemoLoggingAspect {
 	
+	private Logger myLogger = 
+			Logger.getLogger(getClass().getName());
+	
 	@Around("execution(* com.luv2code.aopdemo.service.*.getFortune(..))")
 	public Object aroundGetFortune(
 			ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		// print out method we're advising on
 		String signature = proceedingJoinPoint.getSignature().toShortString();
-		System.out.println("====>>> Executing @Around on " + signature);
+		myLogger.info("====>>> Executing @Around on " + signature);
 		
 		// get begin timestamp
 		long begin = System.currentTimeMillis();
@@ -39,7 +44,7 @@ public class MyDemoLoggingAspect {
 		
 		// compute and display timestamp
 		long duration = end - begin;
-		System.out.println("\n =====> Duration " + duration / 1000.0 + " seconds");
+		myLogger.info("\n =====> Duration " + duration / 1000.0 + " seconds");
 		
 		// should return object
 		return result;
@@ -47,7 +52,7 @@ public class MyDemoLoggingAspect {
 	
 	@After("execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))")
 	public void afterFindAccountAdvice(JoinPoint joinPoint) {
-		System.out.println("\n\n =====> Executing @After : " + joinPoint.getSignature().toShortString());
+		myLogger.info("\n\n =====> Executing @After : " + joinPoint.getSignature().toShortString());
 		
 	}
 	
@@ -56,31 +61,31 @@ public class MyDemoLoggingAspect {
 			throwing="theExc")
 	public void afterThrowingFindAccoundAdvice(JoinPoint jointPoint,
 												Throwable theExc) {
-		System.out.println("\n\n =====> @AfterThrowing : " + jointPoint.getSignature().toShortString());
+		myLogger.info("\n\n =====> @AfterThrowing : " + jointPoint.getSignature().toShortString());
 		
 		// log the exception
-		System.out.println("\n =====> Exception: " + theExc);
+		myLogger.info("\n =====> Exception: " + theExc);
 	}
 	
 	@Before("com.luv2code.aopdemo.aspect.AopExpresions.forDAOPackageNoGetterSetter()")
 	public void beforeAddAccountAdvice(JoinPoint joinPoint) {
-		System.out.println("2) ====>>> Executing @Before advise on addAccount");
+		myLogger.info("2) ====>>> Executing @Before advise on addAccount");
 
 		// display the method signature
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		System.out.println("Method signature: " + signature);
+		myLogger.info("Method signature: " + signature);
 		
 		// display method arguments
 		Object[] objects = joinPoint.getArgs();
 		
 		for(Object obj : objects) {
-			System.out.println("Object: " + obj);
+			myLogger.info("Object: " + obj);
 			
 			if (obj instanceof Account) {
 				// downcast and print Account
 				Account account = (Account) obj;
-				System.out.println("account name: " + account.getName());
-				System.out.println("account level: " + account.getLevel());
+				myLogger.info("account name: " + account.getName());
+				myLogger.info("account level: " + account.getLevel());
 			}
 		}
 	}
@@ -88,14 +93,14 @@ public class MyDemoLoggingAspect {
 	@AfterReturning(pointcut="execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))",
 					returning="result")
 	public void afterReturningAddAccountAdvice(JoinPoint joinPoint, List<Account> result) {
-		System.out.println("\n =====> After @AfterReturning: " + joinPoint.getSignature());
+		myLogger.info("\n =====> After @AfterReturning: " + joinPoint.getSignature());
 
-		System.out.println("\n\n =====> result is: " + result);
+		myLogger.info("\n\n =====> result is: " + result);
 		
 		// convert the account names to uppercase
 		convertAccountNamesToUpperCase(result);
 		
-		System.out.println("\n\n =====> upper case name : " + result);
+		myLogger.info("\n\n =====> upper case name : " + result);
 	}
 
 	private void convertAccountNamesToUpperCase(List<Account> result) {

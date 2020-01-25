@@ -16,6 +16,15 @@
 	  <artifactId>javax.servlet-api</artifactId>
 	  <version>3.1.0</version>
 	</dependency>
+
+	<!-- Additional Repository -->
+	<!--  -->
+	<dependency>
+	    <groupId>com.atlassian.mail</groupId>
+	    <artifactId>atlassian-mail</artifactId>
+	    <version>4.0.4</version>
+	</dependency>
+
 	
 	<!-- Add support for Hibernate: hibernate-core -->
 	<dependency>
@@ -23,7 +32,7 @@
 	  <artifactId>hibernate-core</artifactId>
 	  <version>5.2.11.Final</version>
 	</dependency>
-	
+		
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -31,6 +40,15 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <repositories>
+  	<repository>
+  		<id>atlassian</id>
+  		<name>The atlassian repo</name>
+  		<url>https://m2proxy.atlassian.com/repository/public</url>
+  	</repository>
+  </repositories>
+  
   <build>
     <finalName>mycoolwebapp</finalName>
   </build>

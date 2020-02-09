@@ -20,17 +20,22 @@
 			Role (s): <security:authentication property="principal.authorities" />
 		</p>
 		
-		<!-- Add link to /leaders -->
-		<p>
-			<a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
-			(Only for Manager peeps)
-		</p>
+		<!-- Show only for managers -->
+		<security:authorize access="hasRole('MANAGER')">
+			<p>
+				<!-- Add link to /leaders -->
+				<a href="${pageContext.request.contextPath}/leaders">Leadership Meeting</a>
+				(Only for Manager peeps)
+			</p>
+		</security:authorize>
 		
-		<!-- Add link to /systems -->
-		<p>
-			<a href="${pageContext.request.contextPath}/systems">IT Systems Meeting</a>
-			(Only for Admin peeps)
-		</p>
+		<security:authorize access="hasRole('ADMIN')">
+			<p>
+				<!-- Add link to /systems -->
+				<a href="${pageContext.request.contextPath}/systems">IT Systems Meeting</a>
+				(Only for Admin peeps)
+			</p>
+		</security:authorize>
 	<hr>
 	<form:form action="${pageContext.request.contextPath}/logout" method="POST">
 		<button type="submit">Logout</button>

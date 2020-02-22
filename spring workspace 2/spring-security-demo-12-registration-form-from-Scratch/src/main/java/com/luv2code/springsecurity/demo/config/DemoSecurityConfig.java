@@ -24,11 +24,13 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired 
 	private UserService userService;
+	
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// use jdbc authentication
-		auth.jdbcAuthentication().dataSource(securityDataSource);
+        auth.authenticationProvider(authenticationProvider());
 	}
 	
 	// reference custom login form
@@ -44,6 +46,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.loginPage("/showMyLoginPage")
 			.loginProcessingUrl("/authenticateTheUser")
+			.successHandler(customAuthenticationSuccessHandler)
 			.permitAll()
 			.and()
 			.logout()

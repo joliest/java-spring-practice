@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.luv2code.springsecurity.demo.service.UserService;
+
 @Configuration
 @EnableWebSecurity
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -19,6 +21,9 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	// add a reference to our security data source
 	@Autowired
 	private DataSource securityDataSource;
+	
+	@Autowired 
+	private UserService userService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

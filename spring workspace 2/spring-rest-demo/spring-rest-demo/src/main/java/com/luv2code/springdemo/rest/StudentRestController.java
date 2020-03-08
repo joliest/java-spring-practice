@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +41,27 @@ public class StudentRestController {
 	// define endpoint for /api/student/{studentId}
 	@GetMapping("/student/{studentId}")
 	public Student getStudent(@PathVariable int studentId) {
-		Student student = students.get(studentId);
-		return student;
+		if (studentId >= students.size() || (studentId < 0)) {
+			throw new StudentNotFoundException("Student id not found - " + studentId);
+		}
+		return students.get(studentId);
+	}
+	
+	// handle errors / exception via StudentNotFoundException
+	@ExceptionHandler
+	public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException ex) {
+		StudentErrorResponse error = new StudentErrorResponse();
+		error.setMessage(ex.getMessage());
+		error.setStatus(HttpStatus.NOT_FOUND.value());
+		error.setTimeStamp(System.currentTimeMillis());
+		return new ResponseEntity<StudentErrorResponse>(error, HttpStatus.NOT_FOUND);
 	}
 }
+
+
+
+
+
+
+
+

@@ -13,4 +13,14 @@ public class HomePageController {
 	public String homepage() {
 		return "Hello World. time on server is " + LocalDateTime.now();
 	}
+	
+	@GetMapping("/workout")
+	public String getDailyWorkout() {
+		return "Run a hard 5k run";
+	}
+	
+	@GetMapping("/fortune")
+	public String getDailyFortuner() {
+		return "Today is your lucky day!";
+	}
 }

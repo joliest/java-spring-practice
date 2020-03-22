@@ -27,7 +27,6 @@ public class EmployeeDAOHibernateImpl implements EmployeeDAO {
 	}
 
 	@Override
-	@Transactional
 	public List<Employee> findAll() {
 		// get the current hibernate session
 		Session currentSession = entityManager.unwrap(Session.class);
@@ -42,6 +41,33 @@ public class EmployeeDAOHibernateImpl implements EmployeeDAO {
 		
 		//return result
 		return employees;
+	}
+
+	@Override
+	public Employee findById(int id) {
+		Session session = entityManager.unwrap(Session.class);
+		
+		Employee employee = session.get(Employee.class,  id);
+		
+		return employee;
+	}
+
+	@Override
+	public void save(Employee employee) {
+		Session session = entityManager.unwrap(Session.class);
+		
+		// if id is 0 it doesn't insert
+		session.saveOrUpdate(employee);	
+	}
+
+	@Override
+	public void deleteById(int employeeId) {
+		Session session = entityManager.unwrap(Session.class);
+		
+		Query query =
+				session.createQuery("delete from Employee where id=:employeeId");
+		query.setParameter("employeeId", employeeId);
+		query.executeUpdate();
 	}
 
 }

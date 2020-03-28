@@ -22,11 +22,13 @@
 				<th>ID</th>
 				<th>First Name</th>
 				<th>Last Name</th>
+				<th>Email</th>
 			</thead>
 			<tbody th:each="emp : ${employees}">
 				<td th:text="${emp.id}" />
 				<td th:text="${emp.firstName}" />
 				<td th:text="${emp.lastName}" />
+				<td th:text="${emp.email}" />
 			</tbody>
 			</table>
 		</div>

@@ -1,33 +1,23 @@
 package com.luv2code.springboot.thymeleafdemo.controller;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.luv2code.springboot.thymeleafdemo.model.Employee;
+import com.luv2code.springboot.thymeleafdemo.service.EmployeeService;
 
 @Controller
+@RequestMapping("/employees")
 public class EmployeeController {
 	
-	private List<Employee> employees;
+	@Autowired
+	private EmployeeService employeeService;
 	
-	@PostConstruct
-	private void loadData() {
-		employees = Arrays.asList(
-				new Employee(1, "Joliver", "Estampador"),
-				new Employee(2, "Khaye", "Gorres"),
-				new Employee(3, "Arlene", "Caguin")
-		);
-	}
-	
-	@GetMapping("/employees")
+	@GetMapping("/list")
 	public String showEmployees(Model model) {
-		model.addAttribute("employees", employees);
+		model.addAttribute("employees", employeeService.findAll());
 		return "employees";
 	}
 }

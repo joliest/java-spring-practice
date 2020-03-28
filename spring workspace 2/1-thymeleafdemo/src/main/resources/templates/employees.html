@@ -1,0 +1,25 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<!-- CSS FIle -->
+	<link rel="stylesheet" 
+		  th:href="@{/css/demo.css}" />
+	
+	
+	<title>Thymeleaf Display EMployee Demo</title>
+	<body>
+	<h3> Employee Directory</h3>
+		<table border="1">
+		<thead>
+			<th>ID</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+		</thead>
+		<tbody th:each="emp : ${employees}">
+			<td th:text="${emp.id}" />
+			<td th:text="${emp.firstName}" />
+			<td th:text="${emp.lastName}" />
+		</tbody>
+		</table>
+	</body>
+</html>

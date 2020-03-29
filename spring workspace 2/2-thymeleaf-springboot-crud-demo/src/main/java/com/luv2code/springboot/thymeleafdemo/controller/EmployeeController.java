@@ -54,4 +54,11 @@ public class EmployeeController {
 		employeeService.save(employee);
 		return "redirect:/employees/list";
 	}
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam("employeeId") int id) {
+		// delete the employee
+		employeeService.deleteById(id);
+		return "redirect:/employees/list";
+	}
 }

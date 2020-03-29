@@ -12,11 +12,17 @@
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		
 		
-		<title>Thymeleaf Display EMployee Demo</title>
+		<title>Thymeleaf Display Employee Demo</title>
 	</head>
 	<body>
 		<div class="container">
 			<h3> Employee Directory</h3>
+			
+			<!-- @ symbol context path -->
+			<a th:href="@{/employees/showFormForAdd}"
+				class="btn btn-primary btn-sm mb-3">
+				Add Employee
+			</a>
 			<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<th>ID</th>
@@ -24,8 +30,12 @@
 				<th>Last Name</th>
 				<th>Email</th>
 			</thead>
+			
+			<!-- Will be automatically setter and getter, as long as your eference 'employee' in ModalAttribute -->
 			<tbody th:each="emp : ${employees}">
-				<td th:text="${emp.id}" />
+			
+				<!-- need a hidden field for ID -->
+				<td th:text="${emp.id}" /> 
 				<td th:text="${emp.firstName}" />
 				<td th:text="${emp.lastName}" />
 				<td th:text="${emp.email}" />

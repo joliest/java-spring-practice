@@ -20,10 +20,16 @@
 			<p class="h4 mb-4">Save Employee</p>
 			
 			<!-- dont forget "/" -->
+			
+			<!-- Will be automatically setter and getter, 
+				as long as your eference 'employee' in ModalAttribute -->
 			<form action="#" 
 				  th:action="@{/employees/save}"
 				  th:object="${employee}" 
 				  method="POST">
+				  
+				<!-- need a hidden field for ID to handle update -->
+				  <input type="hidden" th:field="*{id}" />
 				  
 				 <!--  * is like employee.firstName -->
 				  <input type="text"

@@ -25,20 +25,25 @@
 			</a>
 			<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
-				<th>ID</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Email</th>
+				<th>Action</th>
 			</thead>
 			
-			<!-- Will be automatically setter and getter, as long as your eference 'employee' in ModalAttribute -->
 			<tbody th:each="emp : ${employees}">
-			
-				<!-- need a hidden field for ID -->
-				<td th:text="${emp.id}" /> 
 				<td th:text="${emp.firstName}" />
 				<td th:text="${emp.lastName}" />
 				<td th:text="${emp.email}" />
+				
+				<!-- button for updating employee -->
+				<td>
+					<!-- (employeeId=${emp.id}) - appends url ?employeeId=xxx -->
+					<a th:href="@{/employees/showFormForUpdate(employeeId=${emp.id})}"
+						class="btn btn-info btn-sm">
+						Update
+					</a>
+				</td>
 			</tbody>
 			</table>
 		</div>
